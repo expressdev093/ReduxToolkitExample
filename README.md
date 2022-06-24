@@ -1,2 +1,2 @@
 # ReduxToolkitExample
-Basic reduxtookit example with createAsyncThunk to reduc boilerplate code
+Basic reduxtookit example with Typescript and createAsyncThunk to reduce boilerplate code
