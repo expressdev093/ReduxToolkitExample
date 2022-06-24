@@ -1,2 +1,2 @@
 # ReduxToolkitExample
-Created with CodeSandbox
+Reduce boilerplate code for redux-toolkit
