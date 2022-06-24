@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
-import { APIStatus, useAPIData } from "./redux/api";
+import { useAPIData } from "./redux/api";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { getPosts } from "./redux/reducers/postReducer";
 
@@ -40,7 +39,19 @@ export default function App() {
 
   return (
     <div className="App">
-      {loading ? <div>Loading</div> : <div>Show data here</div>}
+      {loading ? (
+        <div>Loading</div>
+      ) : posts.error ? (
+        <div>{posts.error?.message}</div>
+      ) : (
+        <div>
+          <ul>
+            {posts.data?.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

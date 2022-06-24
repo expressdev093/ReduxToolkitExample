@@ -1,4 +1,8 @@
-import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
+import {
+  createAction,
+  createAsyncThunk,
+  createReducer
+} from "@reduxjs/toolkit";
 import {
   APIData,
   APIError,
@@ -7,7 +11,7 @@ import {
   APIStatus
 } from "./../api";
 
-import { postActions } from "./../actions";
+export const deletePostAction = createAction("delete/post");
 
 export interface IPost {
   userId: number;
@@ -45,14 +49,16 @@ export default createReducer(initialState, (builder) => {
   builder
     .addCase(getPosts.pending, (state) => {
       state.posts.status = APIStatus.PENDING;
+      state.posts.error = undefined;
     })
     .addCase(getPosts.fulfilled, (state, action) => {
       state.posts.status = APIStatus.FULFILLED;
       state.posts.data = action.payload;
+      state.posts.error = undefined;
     })
     .addCase(getPosts.rejected, (state, action) => {
       state.posts.status = APIStatus.REJECTED;
       state.posts.error = action.payload;
     })
-    .addCase(postActions.deletePost, (state, action) => {});
+    .addCase(deletePostAction, (state, action) => {});
 });

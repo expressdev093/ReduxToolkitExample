@@ -1,11 +1,10 @@
 import { configureStore, Action, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 import { ThunkAction } from "redux-thunk";
 import logger from "redux-logger";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import rootReducer from "./reducers/rootReducer";
+import rootReducer from "./reducers";
 
 const persistConfig = {
   key: "root",
@@ -14,7 +13,10 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleware = [...getDefaultMiddleware(), logger];
+const middleware = [
+  ...getDefaultMiddleware({ serializableCheck: false }),
+  logger
+];
 export const store = configureStore({
   reducer: persistedReducer,
   middleware,

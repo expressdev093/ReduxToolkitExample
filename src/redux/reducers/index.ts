@@ -1,7 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import postReducer from "./postReducer";
-const rootReducer = combineReducers({
+
+export default combineReducers({
   post: postReducer
 });
-
-export default rootReducer;
