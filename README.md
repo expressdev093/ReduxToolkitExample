@@ -1,2 +1,2 @@
 # ReduxToolkitExample
-Reduce boilerplate code for redux-toolkit
+Basic reduxtookit example with createAsyncThunk to reduc boilerplate code
