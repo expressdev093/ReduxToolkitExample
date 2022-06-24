@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { APIStatus, useAPIData } from "./redux/api";
-import { useAppSelector } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { getPosts } from "./redux/reducers/postReducer";
+
 import "./styles.css";
 
 export default function App() {
   const { posts } = useAppSelector((state) => state.post);
   const [loading, setLoading] = useState<boolean>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {

@@ -6,6 +6,9 @@ import {
   getExceptionPayload,
   APIStatus
 } from "./../api";
+
+import { postActions } from "./../actions";
+
 export interface IPost {
   userId: number;
   id: number;
@@ -50,5 +53,6 @@ export default createReducer(initialState, (builder) => {
     .addCase(getPosts.rejected, (state, action) => {
       state.posts.status = APIStatus.REJECTED;
       state.posts.error = action.payload;
-    });
+    })
+    .addCase(postActions.deletePost, (state, action) => {});
 });
