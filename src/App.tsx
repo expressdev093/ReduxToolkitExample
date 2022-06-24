@@ -39,6 +39,8 @@ export default function App() {
   );
 
   return (
-    <div className="App">{loading ? <div>Loading</div> : <div>Data</div>}</div>
+    <div className="App">
+      {loading ? <div>Loading</div> : <div>Show data here</div>}
+    </div>
   );
 }
