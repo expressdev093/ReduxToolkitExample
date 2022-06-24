@@ -3,16 +3,16 @@ import { useDispatch } from "react-redux";
 import { ThunkAction } from "redux-thunk";
 import logger from "redux-logger";
 
-import rootReducer from "./rootReducer";
+import rootReducer from "./reducers/rootReducer";
 
 const middleware = [...getDefaultMiddleware(), logger];
 export const store = configureStore({
   reducer: rootReducer,
-  middleware
+  middleware,
+  devTools: process.env.NODE_ENV !== "production"
 });
 
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = () => useDispatch();
 
 export type RootState = ReturnType<typeof store.getState>;
 

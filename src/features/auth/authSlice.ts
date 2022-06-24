@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { AppThunk, RootState } from "./../../app/store";
+import { AppThunk, RootState } from "./../../redux/store";
 
 export interface AuthError {
   message: string;
@@ -58,10 +58,10 @@ export const {
 export const login = (): AppThunk => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const currentUser = getCurrentUserFromAPI(
-      "https://auth-end-point.com/login"
-    );
-    dispatch(setAuthSccess(currentUser));
+    // const currentUser = getCurrentUserFromAPI(
+    //   "https://auth-end-point.com/login"
+    // );
+    // dispatch(setAuthSccess(currentUser));
   } catch (error) {
     dispatch(setAuthFailed(error as AuthError));
   } finally {
@@ -71,10 +71,10 @@ export const login = (): AppThunk => async (dispatch) => {
 
 export const logOut = (): AppThunk => async (dispatch) => {
   try {
-    dispatch(setLoading(true));
-    await endUserSession("https://auth-end-point.com/log-out");
+    // dispatch(setLoading(true));
+    // await endUserSession("https://auth-end-point.com/log-out");
   } catch (error) {
-    dispatch(setAuthFailed(error));
+    dispatch(setAuthFailed(error as any));
   } finally {
     dispatch(setLoading(false));
   }

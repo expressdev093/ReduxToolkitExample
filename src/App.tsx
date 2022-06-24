@@ -1,32 +1,43 @@
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { APIStatus, useAPIData } from "./redux/api";
+import { useAppSelector } from "./redux/hooks";
+import { getPosts } from "./redux/reducers/postReducer";
 import "./styles.css";
-import {
-  login,
-  logOut,
-  authSelector,
-  CurrentUser
-} from "./features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
-
-interface UserProfileProps {
-  user?: CurrentUser;
-}
-function UserProfile({ user }: UserProfileProps) {
-  return <div>{user?.display_name}</div>;
-}
 
 export default function App() {
+  const { posts } = useAppSelector((state) => state.post);
+  const [loading, setLoading] = useState<boolean>();
   const dispatch = useDispatch();
-  const { currentUser, isLoading, isAuth, error } = useSelector(authSelector);
-  if (isLoading) return <div>....loading </div>;
-  if (error) return <div>{error.message}</div>;
+
+  useEffect(() => {
+    (async () => {
+      dispatch(getPosts() as any);
+    })();
+  }, []);
+  console.log(posts);
+  useAPIData(
+    posts,
+    useMemo(
+      () => ({
+        onFulfilled: (data) => {
+          setLoading(false);
+          //Do logic with data
+        },
+        onRejected: (error) => {
+          setLoading(false);
+          //do logic with error like show a warning or error message
+        },
+        onPending: () => {
+          setLoading(true);
+          //do logic while data is pending like loading
+        }
+      }),
+      []
+    )
+  );
+
   return (
-    <div className="App">
-      {isAuth ? (
-        <button onClick={() => dispatch(logOut)}> Logout</button>
-      ) : (
-        <button onClick={() => dispatch(login)}>Login</button>
-      )}
-      <UserProfile user={currentUser} />
-    </div>
+    <div className="App">{loading ? <div>Loading</div> : <div>Data</div>}</div>
   );
 }
