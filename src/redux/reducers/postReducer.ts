@@ -1,15 +1,10 @@
-import {
-  createAction,
-  createAsyncThunk,
-  createReducer
-} from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 import {
   APIData,
-  APIError,
   publicRequest,
-  getExceptionPayload,
-  APIStatus
-} from "./../api";
+  APIStatus,
+  createApiAsyncThunk
+} from "./..//api";
 
 export const deletePostAction = createAction("delete/post");
 
@@ -25,18 +20,13 @@ export type PostState = {
 };
 
 // Action
-export const getPosts = createAsyncThunk<
-  IPost[],
-  void,
-  { rejectValue: APIError }
->("blog/getPosts", async (_, { rejectWithValue }) => {
-  try {
+export const getPosts = createApiAsyncThunk<IPost[]>(
+  "blog/getPosts",
+  async () => {
     const response = await publicRequest.get<IPost[]>("/posts");
     return response.data;
-  } catch (ex) {
-    return rejectWithValue(getExceptionPayload(ex));
   }
-});
+);
 
 // Reducer
 export const initialState: PostState = {

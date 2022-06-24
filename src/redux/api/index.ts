@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import { useEffect } from "react";
 
@@ -83,4 +84,27 @@ export const useAPIData = <DataType>(
   }, [response.status, onPending]);
 };
 
+export const createApiAsyncThunk = <DataType = any>(
+  action: string,
+  apiRequestCallback: () => Promise<DataType>
+) =>
+  createAsyncThunk<DataType, void, { rejectValue: APIError }>(
+    action,
+    async (_, { rejectWithValue }) => {
+      try {
+        return await apiRequestCallback();
+      } catch (ex) {
+        return rejectWithValue(getExceptionPayload(ex));
+      }
+    }
+  );
+
+publicRequest.interceptors.request.use(
+  (request) => {
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 publicRequest.interceptors.response.use(onFulfilledRequest, onRejectedResponse);
